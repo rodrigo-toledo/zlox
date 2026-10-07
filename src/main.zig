@@ -12,10 +12,10 @@ pub fn main(init: std.process.Init) !void {
     var c: chunk.Chunk = undefined;
     c.init();
     const constant: u8 = try c.addConstant(arena, 1.2);
-    try c.write(arena, @backingInt(chunk.OpCode.OP_CONSTANT));
-    try c.write(arena, constant);
+    try c.write(arena, @backingInt(chunk.OpCode.OP_CONSTANT), 123);
+    try c.write(arena, constant, 123);
 
-    try c.write(arena, @backingInt(chunk.OpCode.OP_RETURN));
+    try c.write(arena, @backingInt(chunk.OpCode.OP_RETURN), 123);
     debug.disassembleChunk(c, "test");
 
     c.free(arena);
