@@ -11,7 +11,11 @@ pub fn main(init: std.process.Init) !void {
 
     var c: chunk.Chunk = undefined;
     c.init();
-    try c.write(arena, chunk.OpCode.OP_RETURN);
+    const constant: u8 = try c.addConstant(arena, 1.2);
+    try c.write(arena, @backingInt(chunk.OpCode.OP_CONSTANT));
+    try c.write(arena, constant);
+
+    try c.write(arena, @backingInt(chunk.OpCode.OP_RETURN));
     debug.disassembleChunk(c, "test");
 
     c.free(arena);
